@@ -1,0 +1,18 @@
+[theme]
+background = "#282c34"           # Atom One Dark background
+primary = "#abb2bf"              # Atom One Dark foreground (light text)
+secondary = "#5c6370"            # Atom One Dark comment color (dimmed text)
+title = "#c678dd"                # Purple for titles
+playing = "#c678dd"              # Green for playing track
+playing_selected = "#56b6c2"     # Cyan for highlighted playing track
+playing_bg = "#2c323c"           # Slightly lighter background for playing item
+highlight = "#61afef"            # Red for selections
+highlight_bg = "#3e4452"         # Selection background
+error = "#282c34"                # Dark background for error text
+error_bg = "#d19a66"             # Orange for errors (instead of red)
+statusbar = "#abb2bf"            # Light text for status bar
+statusbar_progress = "#c678dd"   # Purple for progress
+statusbar_bg = "#2c323c"         # Slightly lighter than main background
+cmdline = "#56b6c2"              # Cyan for command line
+cmdline_bg = "#2c323c"           # Slightly lighter than main background
+search_match = "#d19a66"         # Orange for search highlighting
