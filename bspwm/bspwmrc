@@ -36,18 +36,32 @@ dunst &
 # Set wallpaper
 feh --bg-fill --randomize ~/Pictures/wallpaper/* &
 
-# Kill existing polybar instances
-killall -q polybar
-# Wait until the processes have been shut down
-while pgrep -u $UID -x polybar >/dev/null; do sleep 1; done
-# Launch polybar
-polybar main &
-
 # Start greenclip if not already running
 pgrep -x greenclip || greenclip daemon &
 
-# Monitor settings
-bspc monitor -d 1 2 3 4 5 6 7 8 9
+# Monitor setup - detect monitors and configure them
+if [[ $(xrandr -q | grep -c " connected") -eq 2 ]]; then
+    # Two monitors connected
+    # Get monitor names
+    PRIMARY=$(xrandr -q | grep " connected primary" | cut -d ' ' -f1)
+    SECONDARY=$(xrandr -q | grep " connected" | grep -v "primary" | head -n 1 | cut -d ' ' -f1)
+    
+    # Configure workspaces for each monitor
+    bspc monitor $PRIMARY -d 1 2 3 4 5
+    bspc monitor $SECONDARY -d 6 7 8 9
+    
+    # Optional: Automatically position monitors (uncomment and adjust as needed)
+    # xrandr --output $PRIMARY --auto --output $SECONDARY --auto --right-of $PRIMARY
+    
+    # Launch polybar for each monitor using the launch script
+    ~/.config/polybar/launch.sh
+else
+    # Single monitor setup
+    bspc monitor -d 1 2 3 4 5 6 7 8 9
+    
+    # Launch polybar for single monitor
+    ~/.config/polybar/launch.sh
+fi
 
 # Global settings
 bspc config border_width         4
@@ -65,5 +79,6 @@ bspc rule -a Zotero desktop='^3'
 bspc rule -a obsidian desktop='^4'
 bspc rule -a Slack desktop='^5'
 bspc rule -a Signal desktop='^5'
-bspc rule -a Spotify desktop='^8'
+bspc rule -a Spotify desktop='^6' # Changed to 6 to put on second monitor when available
+bspc rule -a mpv state=floating center=true
 # bspc rule -a org.gnome.Nautilus state=floating center=true
